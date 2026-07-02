@@ -1,22 +1,38 @@
+# .github/workflows/snake.yml
 name: Generate Snake Animation
+
 on:
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    - cron: "0 */12 * * *"   # 每 12 小时自动更新一次
+  workflow_dispatch:          # 允许在 Actions 页手动触发
+  push:
+    branches:
+      - main                  # 推送到 main 时也更新
+
 jobs:
   generate:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    # 👇 关键修复：授予内置 GITHUB_TOKEN 写权限，解决 403 "denied to github-actions[bot]"
+    permissions:
+      contents: write
+
     steps:
-      - uses: Platane/snk/svg-only@v3
+      # 1) 生成贪吃蛇 SVG（亮色 + 暗色两版）
+      - name: Generate snake.svg
+        uses: Platane/snk/svg-only@v3
         with:
-          github_user_name: jiangchaokang
+          github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/github-snake.svg
-            dist/github-snake-dark.svg?palette=github-dark
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: peaceiris/actions-gh-pages@v3
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+
+      # 2) 推送到独立的 output 分支（README 引用的就是这个分支）
+      - name: Deploy to output branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
           publish_branch: output
+          publish_dir: ./dist
+          force_orphan: true
