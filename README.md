@@ -97,7 +97,7 @@
 ## 📌 Featured Repositories
 
 <p align="center">
-  <a href="https://github.com/jiangchaokang/DifFlow3D"><img src="https://github-readme-stats.vercel.app/api/pin/?username=jiangchaokang&repo=DifFlow3D&theme=tokyonight&hide_border=true"/></a>
+  <a href="https://github.com/IRMVLab/DifFlow3D"><img src="https://github-readme-stats.vercel.app/api/pin/?username=jiangchaokang&repo=DifFlow3D&theme=tokyonight&hide_border=true"/></a>
   <a href="https://github.com/jiangchaokang/3DSFLabelling"><img src="https://github-readme-stats.vercel.app/api/pin/?username=jiangchaokang&repo=3DSFLabelling&theme=tokyonight&hide_border=true"/></a>
 </p>
 <p align="center">
