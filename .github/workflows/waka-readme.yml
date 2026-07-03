@@ -1,12 +1,25 @@
 name: Waka Readme
+
 on:
+  workflow_dispatch:          # 支持手动触发,方便调试
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    - cron: "0 0 * * *"       # 每天 UTC 00:00 更新
+
+permissions:
+  contents: write
+
 jobs:
   update-readme:
+    name: WakaReadme DevMetrics
     runs-on: ubuntu-latest
     steps:
-      - uses: athul/waka-readme@master
+      - uses: athul/waka-readme@master          # 千万别改成别的名字
         with:
-          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
+          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}   # 唯一必填项
+          SHOW_TITLE: true
+          TIME_RANGE: last_7_days
+          BLOCKS: "░▒▓█"       # 渐变进度条,比默认的 "->" 好看
+          LANG_COUNT: 8
+          SHOW_TIME: true
+          SHOW_TOTAL: true
+          STOP_AT_OTHER: true
