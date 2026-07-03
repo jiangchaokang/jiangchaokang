@@ -1,0 +1,100 @@
+# .github/workflows/readme-stats.yml
+#
+# github-readme-stats.vercel.app 官方公共实例已暂停(免费额度耗尽/被 pause),
+# 导致 Stats / Top-Langs / 6 张 Pin 卡片全部裂图。
+#
+# 这个 workflow 不依赖任何第三方托管服务:直接在 GitHub Actions runner 里
+# clone anuraghazra/github-readme-stats 源码,本地跑一份它自带的 express
+# server 生成 SVG,再把结果提交到 readme-stats 分支,README 用
+# raw.githubusercontent.com 引用(和下面的贪吃蛇动画同一套思路)。
+name: Generate README Stats Cards
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"   # 每 12 小时自动刷新一次
+  workflow_dispatch:          # 允许手动触发
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/readme-stats.yml
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Clone github-readme-stats source
+        run: git clone --depth 1 --branch master https://github.com/anuraghazra/github-readme-stats.git grs
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        working-directory: grs
+        run: npm ci
+
+      - name: Start local render server
+        working-directory: grs
+        env:
+          PORT: 9000
+          # 优先使用仓库里配置的私有 PAT(见 README 修复说明),
+          # 没配置的话退回使用 Actions 自带的 GITHUB_TOKEN,
+          # 两者对公开数据的渲染效果完全一致。
+          PAT_1: ${{ secrets.RS_PAT_1 || secrets.GITHUB_TOKEN }}
+        run: |
+          nohup node express.js > "$RUNNER_TEMP/grs-server.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/grs-server.pid"
+
+          echo "Waiting for local server to come up..."
+          for i in $(seq 1 30); do
+            if curl -fs "http://localhost:9000/api/pin/?username=github&repo=docs" -o /dev/null; then
+              echo "Server is up after ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+
+          echo "::error::Local github-readme-stats server failed to start"
+          cat "$RUNNER_TEMP/grs-server.log"
+          exit 1
+
+      - name: Render stats cards
+        run: |
+          set -u
+          mkdir -p dist
+          BASE="http://localhost:9000/api"
+
+          fetch_card () {
+            local url="$1" out="$2"
+            curl -fs "$url" -o "dist/$out"
+            if grep -q "Something went wrong" "dist/$out"; then
+              echo "::error::Rendering failed for $out"
+              cat "dist/$out"
+              exit 1
+            fi
+            echo "OK: $out"
+          }
+
+          fetch_card "$BASE?username=jiangchaokang&show_icons=true&include_all_commits=true&count_private=true&theme=tokyonight&hide_border=true" "stats.svg"
+          fetch_card "$BASE/top-langs/?username=jiangchaokang&layout=compact&langs_count=8&theme=tokyonight&hide_border=true" "top-langs.svg"
+          fetch_card "$BASE/pin/?username=IRMVLab&repo=RegFormer&show_owner=true&theme=tokyonight&hide_border=true" "pin-regformer.svg"
+          fetch_card "$BASE/pin/?username=jiangchaokang&repo=awesome-generative-models&theme=tokyonight&hide_border=true" "pin-awesome-generative-models.svg"
+          fetch_card "$BASE/pin/?username=IRMVLab&repo=DifFlow3D&show_owner=true&theme=tokyonight&hide_border=true" "pin-difflow3d.svg"
+          fetch_card "$BASE/pin/?username=IRMVLab&repo=TransLO&show_owner=true&theme=tokyonight&hide_border=true" "pin-translo.svg"
+          fetch_card "$BASE/pin/?username=IRMVLab&repo=Mamba4D&show_owner=true&theme=tokyonight&hide_border=true" "pin-mamba4d.svg"
+          fetch_card "$BASE/pin/?username=jiangchaokang&repo=3DSFLabelling&theme=tokyonight&hide_border=true" "pin-3dsflabelling.svg"
+
+      - name: Deploy to readme-stats branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: readme-stats
+          publish_dir: ./dist
+          force_orphan: true

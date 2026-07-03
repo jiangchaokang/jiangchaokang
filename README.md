@@ -89,8 +89,8 @@
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img height="165" src="https://github-readme-stats.vercel.app/api?username=jiangchaokang&show_icons=true&include_all_commits=true&count_private=true&theme=tokyonight&hide_border=true"/>
-  <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=jiangchaokang&layout=compact&langs_count=8&theme=tokyonight&hide_border=true"/>
+  <img height="165" src="https://raw.githubusercontent.com/jiangchaokang/jiangchaokang/readme-stats/stats.svg"/>
+  <img height="165" src="https://raw.githubusercontent.com/jiangchaokang/jiangchaokang/readme-stats/top-langs.svg"/>
 </p>
 <p align="center">
   <img src="https://streak-stats.demolab.com/?user=jiangchaokang&theme=tokyonight&hide_border=true"/>
@@ -136,14 +136,14 @@
 ## 📌 Featured Open-Source Projects
 
 <p align="center">
-  <a href="https://github.com/IRMVLab/RegFormer"><img src="https://github-readme-stats.vercel.app/api/pin/?username=IRMVLab&repo=RegFormer&show_owner=true&theme=tokyonight&hide_border=true"/></a>
-  <a href="https://github.com/jiangchaokang/awesome-generative-models"><img src="https://github-readme-stats.vercel.app/api/pin/?username=jiangchaokang&repo=awesome-generative-models&theme=tokyonight&hide_border=true"/></a>
-  <a href="https://github.com/IRMVLab/DifFlow3D"><img src="https://github-readme-stats.vercel.app/api/pin/?username=IRMVLab&repo=DifFlow3D&show_owner=true&theme=tokyonight&hide_border=true"/></a>
+  <a href="https://github.com/IRMVLab/RegFormer"><img src="https://raw.githubusercontent.com/jiangchaokang/jiangchaokang/readme-stats/pin-regformer.svg"/></a>
+  <a href="https://github.com/jiangchaokang/awesome-generative-models"><img src="https://raw.githubusercontent.com/jiangchaokang/jiangchaokang/readme-stats/pin-awesome-generative-models.svg"/></a>
+  <a href="https://github.com/IRMVLab/DifFlow3D"><img src="https://raw.githubusercontent.com/jiangchaokang/jiangchaokang/readme-stats/pin-difflow3d.svg"/></a>
 </p>
 <p align="center">
-  <a href="https://github.com/IRMVLab/TransLO"><img src="https://github-readme-stats.vercel.app/api/pin/?username=IRMVLab&repo=TransLO&show_owner=true&theme=tokyonight&hide_border=true"/></a>
-  <a href="https://github.com/IRMVLab/Mamba4D"><img src="https://github-readme-stats.vercel.app/api/pin/?username=IRMVLab&repo=Mamba4D&show_owner=true&theme=tokyonight&hide_border=true"/></a>
-  <a href="https://github.com/jiangchaokang/3DSFLabelling"><img src="https://github-readme-stats.vercel.app/api/pin/?username=jiangchaokang&repo=3DSFLabelling&theme=tokyonight&hide_border=true"/></a>
+  <a href="https://github.com/IRMVLab/TransLO"><img src="https://raw.githubusercontent.com/jiangchaokang/jiangchaokang/readme-stats/pin-translo.svg"/></a>
+  <a href="https://github.com/IRMVLab/Mamba4D"><img src="https://raw.githubusercontent.com/jiangchaokang/jiangchaokang/readme-stats/pin-mamba4d.svg"/></a>
+  <a href="https://github.com/jiangchaokang/3DSFLabelling"><img src="https://raw.githubusercontent.com/jiangchaokang/jiangchaokang/readme-stats/pin-3dsflabelling.svg"/></a>
 </p>
 
 <p align="center"><sub>💡 <b>awesome-generative-models</b> is a self-maintained, weekly-updated catalog tracking 200+ generative-model papers (diffusion / video / 3D / 4D) — <a href="https://github.com/jiangchaokang/awesome-generative-models">see the live list</a>.</sub></p>
